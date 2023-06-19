@@ -70,6 +70,10 @@ const player = new Fighter({
       imageSrc: "./img/player/Attack1.png",
       framesMax: 6,
     },
+    takeHit: {
+      imageSrc: "./img/player/Take Hit - white silhouette.png",
+      framesMax: 4,
+    },
   },
   attackBox: {
     offset: {
@@ -122,6 +126,10 @@ const enemy = new Fighter({
     attack1: {
       imageSrc: "./img/enemy/Attack1.png",
       framesMax: 4,
+    },
+    takeHit: {
+      imageSrc: "./img/enemy/Take hit.png",
+      framesMax: 3,
     },
   },
   attackBox: {
@@ -202,7 +210,7 @@ function animate() {
     enemy.switchSprite("fall");
   }
 
-  // detect for collision
+  // detect for collision & enemy gets hit
   if (
     rectangularCollision({
       rectangle1: player,
@@ -211,8 +219,8 @@ function animate() {
     player.isAttacking &&
     player.frameCurrent === 4
   ) {
+    enemy.takeHit();
     player.isAttacking = false;
-    enemy.health -= 20;
     document.querySelector("#enemyHealth").style.width = enemy.health + "%";
   }
 
@@ -220,7 +228,7 @@ function animate() {
   if (player.isAttacking && player.frameCurrent === 4) {
     player.isAttacking = false;
   }
-
+  // when player gets hit
   if (
     rectangularCollision({
       rectangle1: enemy,
@@ -229,8 +237,8 @@ function animate() {
     enemy.isAttacking &&
     enemy.frameCurrent === 2
   ) {
+    player.takeHit();
     enemy.isAttacking = false;
-    player.health -= 20;
     document.querySelector("#playerHealth").style.width = player.health + "%";
   }
 
