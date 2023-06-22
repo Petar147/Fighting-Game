@@ -75,9 +75,9 @@ const player = new Fighter({
       framesMax: 4,
     },
     death: {
-      imageSrc: './img/player/Death.png',
-      framesMax: 6
-    }
+      imageSrc: "./img/player/Death.png",
+      framesMax: 6,
+    },
   },
   attackBox: {
     offset: {
@@ -136,9 +136,9 @@ const enemy = new Fighter({
       framesMax: 3,
     },
     death: {
-      imageSrc: './img/enemy/Death.png',
-      framesMax: 7
-    }
+      imageSrc: "./img/enemy/Death.png",
+      framesMax: 7,
+    },
   },
   attackBox: {
     offset: {
@@ -263,38 +263,46 @@ function animate() {
 animate();
 
 window.addEventListener("keydown", (event) => {
-  switch (event.key) {
-    case "d":
-      keys.d.pressed = true;
-      player.lastKey = "d";
-      break;
-    case "a":
-      keys.a.pressed = true;
-      player.lastKey = "a";
-      break;
-    case "w":
-      player.velocity.y = -20;
-      break;
-    //attack
-    case " ":
-      player.attack();
-      break;
-    case "ArrowLeft":
-      keys.ArrowLeft.pressed = true;
-      enemy.lastKey = "ArrowLeft";
-      break;
-    case "ArrowRight":
-      keys.ArrowRight.pressed = true;
-      enemy.lastKey = "ArrowRight";
-      break;
-    case "ArrowUp":
-      enemy.velocity.y = -20;
-      break;
-    case "ArrowDown":
-      enemy.attack();
-      break;
+  if (!player.dead) {
+    switch (event.key) {
+      case "d":
+        keys.d.pressed = true;
+        player.lastKey = "d";
+        break;
+      case "a":
+        keys.a.pressed = true;
+        player.lastKey = "a";
+        break;
+      case "w":
+        player.velocity.y = -20;
+        break;
+      //attack
+      case " ":
+        player.attack();
+        break;
+    }
+  }
+
+  if (!enemy.dead) {
+    switch (event.key) {
+      case "ArrowLeft":
+        keys.ArrowLeft.pressed = true;
+        enemy.lastKey = "ArrowLeft";
+        break;
+      case "ArrowRight":
+        keys.ArrowRight.pressed = true;
+        enemy.lastKey = "ArrowRight";
+        break;
+      case "ArrowUp":
+        enemy.velocity.y = -20;
+        break;
+      case "ArrowDown":
+        enemy.attack();
+        break;
+    }
   }
 });
+
 window.addEventListener("keyup", (event) => {
   //player keys
   switch (event.key) {
